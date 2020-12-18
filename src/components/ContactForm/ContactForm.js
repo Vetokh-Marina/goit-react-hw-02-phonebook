@@ -8,13 +8,6 @@ import s from './ContactForm.module.css';
     number: '',
   };
 
-
-  handleChange = event => {
-    const { name, value } = event.currentTarget;
-
-    this.setState({ [name]: value });
-  };
-
   contactValidation = () => {
     const { name, number } = this.state;
     const { contacts } = this.props;
@@ -28,10 +21,15 @@ import s from './ContactForm.module.css';
       alert('Please enter all data');
       return true;
     }
+   };
+    handleChange = event => {
+    const { name, value } = event.currentTarget;
+
+    this.setState({ [name]: value });
   };
 
-  handleSubmit = e => {
-    e.preventDefault();
+  handleSubmit = event => {
+    event.preventDefault();
     const { name, number } = this.state;
 
     if (this.contactValidation()) {
@@ -41,7 +39,7 @@ import s from './ContactForm.module.css';
     this.props.onSubmit(name, number);
     this.reset();
   };
-
+//очищает введенные данные в инпуте
   reset = () => {
     this.setState({ name: '', number: '' });
   };
@@ -59,7 +57,6 @@ import s from './ContactForm.module.css';
             value={this.state.name}
             placeholder="Сontact name"
             onChange={this.handleChange}
-            className={s.input}
           />
         </label>
 
@@ -72,7 +69,6 @@ import s from './ContactForm.module.css';
             value={this.state.number}
             placeholder="Сontact number"
             onChange={this.handleChange}
-            className={s.input}
           />
         </label>
         <button type="submit" className={s.button}>
@@ -85,13 +81,8 @@ import s from './ContactForm.module.css';
 }
 
 contactForm.propTypes = {
-    contacts: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        number: PropTypes.string.isRequired,
-        onSubmit: PropTypes.func.isRequired,
-      }),
-    ),
+    contacts: PropTypes.array,
+    name: PropTypes.string,
+    number: PropTypes.string,
   };
 export default contactForm;
